@@ -1,0 +1,12 @@
+.env
+.venv/
+__pycache__/
+*.pyc
+.DS_Store
+
+# Data and models live on the Hugging Face Hub
+datasets/
+outputs/
+checkpoints/
+.cache/
+wandb/

@@ -1,0 +1,28 @@
+# The one place for machine facts. Fill the nulls from lerobot-find-port and
+# lerobot-find-cameras; every guide and script reads these instead of repeating them.
+
+follower:
+  type: so101_follower
+  id: ive_follower        # calibration key, never change without recalibrating
+  port: null              # /dev/tty.usbmodem...
+  voltage: 12
+
+leader:
+  type: so101_leader
+  id: ive_leader
+  port: null
+  voltage: 5
+
+cameras:
+  scene:                  # laptop camera, sees the whole workspace
+    type: opencv
+    index_or_path: null
+    width: 640
+    height: 480
+    fps: 30
+  wrist:                  # on the follower's gripper
+    type: opencv
+    index_or_path: null
+    width: 640
+    height: 480
+    fps: 30

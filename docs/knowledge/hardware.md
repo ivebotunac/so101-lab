@@ -2,7 +2,8 @@
 
 The SO-101 is the second generation of the SO-ARM100 by TheRobotStudio and Hugging Face,
 with better cable routing, easier assembly and tuned leader gear ratios. Each arm has 6
-degrees of freedom and 6 Feetech STS3215 smart servos. STL files, the bill of materials and
+Feetech STS3215 smart servos: five joints and the gripper. Five joints cannot reach every
+orientation at every position, so a target pose is sometimes reachable only approximately. STL files, the bill of materials and
 the URDF and MJCF models: https://github.com/TheRobotStudio/SO-ARM100
 
 ## The Pro kit has two power supplies
@@ -66,8 +67,9 @@ motors with the same id on the line produce chaos.
 | Present_Temperature | 63 | Degrees Celsius |
 | Present_Current | 69 | 1 unit is 6.5 mA |
 
-Switch torque off before writing to EEPROM. LeRobot's `FeetechMotorsBus` uses the same
-register names.
+Switch torque off before writing to EEPROM. In LeRobot 0.7.0 the motors are driven through
+`SerialMotorsBus`, built on rustypot, which the `feetech` extra installs in place of the
+vendor SDK. `FeetechMotorsBus` in older tutorials is a deprecated alias.
 
 ## Current as a sense of touch
 
@@ -112,6 +114,8 @@ depends on how it was assembled. Calibration settles that with the software. Con
 3. Overheating, above all the gripper in continuous work.
 4. The arm falls without torque.
 5. Backlash: do not expect absolute precision, least of all with the arm stretched out.
+   The data sheet says 0.5 degrees; measurements on real servos report about 1 degree, and
+   1.8 to 2.6 degrees of position error under a 1.5 kg load.
 6. The gripper wears out from too much grasping force. Limit force and speed.
 
 ## Later extensions

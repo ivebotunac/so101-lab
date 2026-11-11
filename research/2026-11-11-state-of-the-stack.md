@@ -22,6 +22,8 @@ Reported from the release notes, not re-read here:
 - `lerobot-rollout --interactive=true` adds `/start`, `/subtask`, `/vqa`, `/autosteer` and
   `/stop`.
 - macOS 14 or newer is required, macOS 15 for MPS.
+- Feetech and Dynamixel motors run on one `SerialMotorsBus` built on rustypot;
+  `FeetechMotorsBus` is a deprecated alias. Read in the release notes.
 
 Sources: https://github.com/huggingface/lerobot/releases and
 https://huggingface.co/blog/lerobot/lerobot-release-v070

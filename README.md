@@ -33,7 +33,8 @@ and [LeRobot](https://github.com/huggingface/lerobot). It is used for three thin
 6. [Voice control](docs/guides/voice-control.md): speech, skills, memory, perception.
 
 Background reading is in [docs/knowledge](docs/knowledge): concepts, hardware, motion and
-kinematics, resources, literature. The target system and the order of work are in
+kinematics, resources, literature, and a [reading list](docs/knowledge/reading-list.md) of
+tutorials and projects by topic. The target system and the order of work are in
 [docs/architecture.md](docs/architecture.md), the reasons in
 [docs/decisions.md](docs/decisions.md).
 

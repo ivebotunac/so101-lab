@@ -21,6 +21,12 @@ Numbers from the SmolVLA blog on a real SO-100: pick and place 80 percent agains
 ACT, stacking 75 against 65, sorting 78 against 68. Transfer to an SO-101: 76.5 against
 48.3. Pretraining moves SmolVLA from 51.7 to 78.3 percent.
 
+An independent benchmark on a physical SO-101 (https://arxiv.org/abs/2606.08881, four tasks,
+100 demonstrations each) is less kind: SmolVLA averaged 32.5 percent, level with ACT at
+33.75, while pi0.5 reached 56.25 and recovered from far more of its failures. See
+[the November 2026 research note](../../research/2026-11-11-state-of-the-stack.md). Expect
+results on this arm to sit between the blog and the benchmark, and measure.
+
 ## It does not work without fine-tuning
 
 The base model officially requires fine-tuning, with about 50 episodes recommended. This
@@ -40,15 +46,18 @@ lerobot-train \
   --policy.device=cuda \
   --output_dir=outputs/train/smolvla_so101 \
   --job_name=smolvla_so101 \
-  --policy.repo_id=${HF_USER}/smolvla_so101
+  --policy.repo_id=${HF_USER}/smolvla_so101 \
+  --trackio.enable=true
 ```
 
 - **`--policy.path`, never `--policy.type=smolvla`.** The second trains from scratch, needs
   about 200k steps and throws away the pretraining that is the reason for choosing SmolVLA.
 - **`--rename_map` maps this lab's camera names to `camera1`, `camera2`, `camera3`.**
   Without it training stops with a feature mismatch.
-- Experiment tracking is switched on with a flag; check the current LeRobot documentation
-  for which tracker the installed release supports.
+- **Tracking is Trackio.** LeRobot 0.7.0 replaced Weights & Biases, so `--wandb.*` flags
+  from older tutorials become `--trackio.*`, and a remote job needs `--trackio.space_id`.
+  Checkpoints are no longer uploaded as tracking artifacts; `--policy.repo_id` is what
+  publishes the policy.
 
 Resume after a dropped session:
 
@@ -96,7 +105,12 @@ lerobot-rollout \
 ```
 
 - The camera configuration and the `--rename_map` are identical to recording and training.
-- `--inference.type=rtc` gives smoother motion with a slow policy.
+- Strategies: `base`, `sentry`, `highlight`, `dagger` for a human in the loop, `episodic`.
+- `--inference.type=rtc` gives smoother motion with a slow policy. `--inference.type=remote`
+  runs the policy on another machine through `lerobot-policy-server` and the `remote` extra,
+  which replaced the old `async` extra.
+- `--interactive=true` opens a prompt with `/start`, `/subtask`, `/vqa`, `/autosteer` and
+  `/stop`.
 - `--task` is a process argument and cannot change during a rollout. A robot that switches
   tasks restarts the rollout or uses the Python API.
 - There is no validation curve for a real robot. A checkpoint is chosen by testing it on the

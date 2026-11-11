@@ -74,6 +74,16 @@ Each step teaches one new thing and has to work before the next begins.
 - The reasoning model harness from [Gemini ER and Argon](guides/gemini-argon.md) fits beside
   step 7: the same IK, homography and safety layer.
 
+## Milestones
+
+- The vertical slice of step 4: about 2 to 3 weeks.
+- A robot that holds a conversation, recognises people, waves and points, with no
+  manipulation: about 3 to 4 months.
+- Reliable tabletop skills: 6 months or more, because recording scales linearly in hours.
+
+No part is unsolved. It is an engineering project with known solutions and many details,
+and it succeeds when done in order.
+
 ## The library
 
 `src/so101/` holds what survives the labs:

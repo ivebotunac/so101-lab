@@ -40,9 +40,10 @@ repos or private notes. Ports and camera indexes are machine facts, not secrets,
 
 ## LeRobot changes fast
 
-Command names and flags have changed between releases (`lerobot-record` for evaluation
-became `lerobot-rollout`, SmolVLA training gained a required `--rename_map`). The commands
-in `docs/guides/` were checked against the LeRobot documentation when written. Before
+The lab is pinned to LeRobot 0.7.0. Command names and flags have changed between releases
+(`lerobot-record` for evaluation became `lerobot-rollout`, SmolVLA training gained a required
+`--rename_map`, Trackio replaced Weights & Biases). The commands in `docs/guides/` were
+checked against the LeRobot documentation when written. Before
 changing or adding one, check the current documentation instead of writing it from memory.
 
 ## Where things go

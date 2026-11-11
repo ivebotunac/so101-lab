@@ -20,6 +20,10 @@ Leads for reading, not conclusions.
 - **ELLMER**, [Nature Machine Intelligence 2025](https://doi.org/10.1038/s42256-025-01005-x):
   GPT-4 with retrieval and force and visual feedback for long-horizon tasks. The closest
   related work to a reasoner that orchestrates skills on an arm.
+- **Benchmarking VLA Models on SO-101: Failure and Recovery Analysis**,
+  https://arxiv.org/abs/2606.08881: pi0.5, SmolVLA, Wall-X and ACT fine-tuned on a physical
+  SO-101, with a failure taxonomy and recovery metrics. The closest thing to a reference
+  result for this arm.
 - **Robot Learning: A Tutorial**, https://arxiv.org/abs/2510.12403: a good base for teaching.
 - [Touch and vision for robotic housekeeping](https://doi.org/10.1038/s41467-024-51261-5),
   Nature Communications 2024.

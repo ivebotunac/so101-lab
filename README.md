@@ -51,6 +51,6 @@ research/        dated notes on new models, papers and releases
 behaviors/       robot skills as data
 ```
 
-Folders appear as their first content does. Commands and numbers reflect the LeRobot
+Folders appear as their first content does. Commands and numbers reflect LeRobot 0.7.0, the
 release they were checked against; LeRobot moves fast, so check its documentation when a
 command fails.

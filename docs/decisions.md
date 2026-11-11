@@ -47,3 +47,6 @@ names the one it replaces.
 - Argon's real latency and cost per move on this setup.
 - Argon or ER 2 as the planner, or both in different roles?
 - Which are the first two or three SmolVLA skills, and their task strings?
+- Does SmolVLA-only still hold? A benchmark on a physical SO-101
+  (https://arxiv.org/abs/2606.08881) puts SmolVLA level with ACT and pi0.5 well ahead. The
+  first trained skill is the place to compare them on this arm.

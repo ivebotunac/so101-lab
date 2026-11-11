@@ -20,7 +20,19 @@ audio.
 | Local: Pipecat or LiveKit Agents with faster-whisper and a TTS | Privacy and full control |
 | Moshi (Kyutai) | Open source full duplex, about 200 ms, weaker with tools |
 
-The lab compares these rather than committing to one. A language marked as supported and a
+Names and prices as listed in November 2026, to be checked before a budget is set:
+
+- OpenAI's realtime models are `gpt-realtime-2.1` and `gpt-realtime-2.1-mini`, priced per
+  audio token. A separate full-duplex model, `gpt-live-1`, costs 0.05 USD per session
+  minute with the backend model and tools billed on top, and uses its own endpoint.
+- Gemini Live is `gemini-3.8-live`, about 0.005 USD per minute of audio in and 0.018 USD per
+  minute out. Its native transport is a WebSocket; WebRTC comes through LiveKit or Pipecat.
+- ER 2 streaming returns text only, so it needs a separate voice for output.
+- An existing voice controlled SO-101:
+  https://github.com/fouad1233/SO101_Speech_controlled_robotic_arm_with_smolvla
+
+The lab compares these rather than committing to one. No published source measures how any
+of them handles Croatian. A language marked as supported and a
 voice that is pleasant to listen to are different things for a small language, so each
 candidate gets a 15 minute live test in the target language before anything is built on it.
 For a fully local pipeline in a small language, check that the TTS model covers it; Meta
@@ -64,6 +76,7 @@ Letta (https://github.com/letta-ai/letta).
 - **Reflexes are computer vision.** InsightFace computes a face embedding and compares it
   against a FAISS index in milliseconds, locally. Face tracking with a PID loop makes the
   arm "look at" the speaker.
+- **Voice identity** is optional, with pyannote.audio.
 - **Thinking is a VLM.** "What is the person holding?", "is the table tidy?". Slower and
   paid per call.
 
@@ -79,8 +92,9 @@ Letta (https://github.com/letta-ai/letta).
 
 ## Web search in a voice loop
 
-Speak a filler ("let me check") the moment a search starts, so the listener hears something
-within a second. Retrieve only when needed, answer in 40 to 60 words, cap each result at
+Tavily or Gemini grounding do the search. Speak a filler ("let me check") the moment it
+starts, so the listener hears something within a second; fillers also raise how competent
+the robot seems (https://arxiv.org/abs/2508.11781). Retrieve only when needed, answer in 40 to 60 words, cap each result at
 300 to 500 characters.
 
 ## The five things that hurt

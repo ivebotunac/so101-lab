@@ -14,7 +14,8 @@ as `<FOLLOWER_PORT>` and `<LEADER_PORT>`.
 
 ## 1. Software
 
-LeRobot needs Python 3.12 and ffmpeg.
+The lab runs LeRobot 0.7.0, which needs Python 3.12, ffmpeg and macOS 14 or newer, macOS 15
+for MPS.
 
 ```bash
 brew install miniforge
@@ -22,10 +23,12 @@ conda create -y -n lerobot python=3.12
 conda activate lerobot
 conda install ffmpeg -c conda-forge
 
-pip install 'lerobot[core_scripts,feetech,training]'
-pip install 'lerobot[smolvla]'        # when SmolVLA is needed
+pip install 'lerobot[core_scripts,feetech,training]==0.7.0'
+pip install 'lerobot[smolvla]==0.7.0'        # when SmolVLA is needed
 ```
 
+- A bare `pip install lerobot` brings no dataset or training dependencies; the extras have
+  to be named.
 - `core_scripts` brings record, replay and calibrate. `feetech` adds the motor SDK.
   `training` adds what `lerobot-train` needs.
 - LeRobot's own guide recommends `uv` when working from a clone of its source:

@@ -45,7 +45,9 @@ scripts, no VLA anywhere.
    without a new recording.
 4. **Teleoperation without a leader.** Phone, keyboard or gamepad.
 5. **Authoring in simulation.** `lerobot-kinematics` moves the end effector with the
-   keyboard in MuJoCo, and the same script then runs on the real arm.
+   keyboard in MuJoCo (w/s, a/d, r/f, e/q, t/g, and z/c for the gripper), and the same
+   script then runs on the real arm: `examples/lerobot_keycon_gpos_101.py` in simulation,
+   `examples/lerobot_keycon_gpos_real.py` on hardware.
 6. **An LLM writes the gesture.** Through an MCP server for the arm, describe the motion in
    words, iterate, then freeze the result as keyframes. The LLM is no longer in the loop
    when the gesture plays.
@@ -89,6 +91,10 @@ the rhythm of speech gives a point of focus and reads at once as "this is talkin
 - **Breathing as the idle motion.** A robot that stands perfectly still looks dead.
 - **`idle_do_nothing` as an explicit tool.** The model must be able to choose to do nothing,
   otherwise every pause becomes a motion.
+- **Emotions and dances as datasets** on the Hub:
+  `pollen-robotics/reachy-mini-emotions-library` and
+  `pollen-robotics/reachy-mini-dances-library`, played through tools such as
+  `play_emotion`, `dance`, `stop_emotion`, `move_head` and `head_tracking`.
 
 ## Three layers of motion
 

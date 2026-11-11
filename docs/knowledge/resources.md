@@ -20,13 +20,18 @@ LeRobot now uses normalised joint states.
 - Pipecat: https://github.com/pipecat-ai/pipecat
 - LiveKit Agents: https://github.com/livekit/agents
 - Moshi: https://github.com/kyutai-labs/moshi
+- RealtimeSTT and RealtimeTTS by KoljaB, local speech in and out
 - ElatoAI, realtime voice on an ESP32: https://github.com/akdeb/ElatoAI
 - ROSA, the tool and guardrail pattern from NASA JPL: https://github.com/nasa-jpl/rosa
 - mem0: https://github.com/mem0ai/mem0
 - Letta: https://github.com/letta-ai/letta
 - InsightFace: https://github.com/deepinsight/insightface
 - Voyager, a skill library that grows through code: https://github.com/MineDojo/Voyager
-- Gemini with an SO-101: https://github.com/johannstark/GeminiRobotics-SO101
+- Gemini Robotics ER 2 with an SO-101: https://github.com/Ekumen-OS/GeminiRobotics-SO101
+- A voice controlled SO-101:
+  https://github.com/fouad1233/SO101_Speech_controlled_robotic_arm_with_smolvla
+- An MCP server and ROS 2 bridge for the SO-101:
+  https://github.com/anshuman-dev/ros-mcp-plugin
 
 ## VLA and simulation
 
@@ -39,6 +44,13 @@ LeRobot now uses normalised joint states.
 - isaac_so_arm101: https://github.com/MuammerBay/isaac_so_arm101
 - gym-hil: https://github.com/huggingface/gym-hil
 - phosphobot, a web UI for record and train: https://github.com/phospho-app/phosphobot
+- HIL-SERL on an SO-101: the `hilserl-so101` branch of `ggand0/lerobot`
+- SO-101 pick and place in MuJoCo with ACT, with a sweep over the number of demonstrations:
+  https://github.com/aviadarn/so101-lerobot
+- Evaluation of fine-tuned VLA policies on the SO-101:
+  https://github.com/RoboColosseum/robocolosseum-finetune-so101
+- Argon cookbook, a 3D scene from an image and a 6-DOF IK simulator:
+  `RobinaMirbahar/gemini-4-argon-cookbook`
 - Awesome lists: https://github.com/Psi-Robot/Awesome-VLA-Papers and
   https://github.com/robotics-survey/Awesome-Robotics-Foundation-Models
 

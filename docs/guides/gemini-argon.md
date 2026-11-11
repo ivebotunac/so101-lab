@@ -3,8 +3,10 @@
 Both are reasoners: they look, understand, plan and call functions. Neither drives motors.
 The code in this repo executes what they ask for, after checking it.
 
-Model ids, prices and limits change. The values below are from October 2026; read the
+Model ids, prices and limits change. The values below were checked on 2026-11-11; read the
 official documentation before relying on any of them.
+
+- Pricing: https://ai.google.dev/gemini-api/docs/pricing
 
 - Robotics overview: https://ai.google.dev/gemini-api/docs/robotics-overview
 - Argon for robotics: https://developers.googleblog.com/gemini-4-argon-for-robotics/
@@ -23,12 +25,18 @@ official documentation before relying on any of them.
 | `gemini-robotics-er-2-preview` | Structured output, code execution, multi-step tool use |
 | `gemini-robotics-er-2-streaming-preview` | Live API over WebSocket: 16 kHz PCM audio and JPEG up to 1 fps, for a voice loop |
 
+Both are still previews, take text, image, video and audio, and return text only, so neither
+speaks. The streaming endpoint keeps function calling but drops structured output, code
+execution, caching and batch. Both cost 1 USD per million input tokens and 5 USD per million
+output tokens through 2026-12-31, then 2 and 10 USD. The free tier's data is used to improve
+Google's products.
+
 - The API key must have restrictions; an unrestricted key returns 403.
 - Function calls for physical motion are blocking, so a long motion stops the conversation.
 - The API provides no safety stop and no collision checking. Arguments are validated here,
   and a network retry must never turn one motion into two.
 - Google forbids safety-critical use. The safety layer is this repo's responsibility.
-- An example of Gemini with an SO-101: https://github.com/johannstark/GeminiRobotics-SO101
+- An example of ER 2 with an SO-101: https://github.com/Ekumen-OS/GeminiRobotics-SO101
 
 The pattern: ER receives speech and an image, returns pointing and a plan, calls skills as
 function calls, watches progress and replans.
@@ -41,16 +49,20 @@ a second. Every few seconds it looks at an image and calls a function such as
 arm should go; a trained policy is the reflex in the arm.
 
 Google's blog shows an SO-101 placing a LEGO brick into a box, improving over three
-iterations from 58.9 s to 22.9 s to 17.4 s. Argon used a visual coordinate harness (the
-wrist camera with a grid drawn over it) and action primitives (`grasp`, `place`, `goto`,
-`move_until_contact`) served by a local HTTP server. The harness was not published; the
-prompts were, in three phases: a dry run without moving, a hover with a check through the
-wrist camera, then autonomous execution.
+iterations from 58.9 s to 22.9 s to 17.4 s. Those are task times, not API latency. Argon used
+a visual coordinate harness: the wrist camera image with a 2 cm grid drawn at `grid_z`, +X
+up, +Y left and +Z as height above the table. Its action primitives, served by a local HTTP
+server, were `look_at`, `deproject`, `grasp`, `place`, `place_until_contact`, `goto`,
+`move_by`, `move_until_contact`, `open_gripper`, `close_gripper`, `home` and `done`. The
+harness was not published, by Google or anyone else found so far; the prompts were, in three
+phases: a dry run without moving, a hover with a check through the wrist camera, then
+autonomous execution.
 
-As of October 2026: `gemini-4-argon` on the paid tier of the Gemini API, through the
-Interactions API and the `google-genai` SDK, at an introductory 2 USD per million input and
-10 USD per million output tokens. Output is text only, the Live API is not supported, and
-no production latency is published. Articles claiming latency under 50 ms and "actuation
+`gemini-4-argon` is on the paid tier of the Gemini API only, through the Interactions API
+and the `google-genai` SDK. It costs 2 USD per million input and 10 USD per million output
+tokens through 2026-11-30, then 4 and 20 USD; thinking tokens are billed as output. Output
+is text only and the Live API is not supported. Hard reasoning can take minutes, so the
+developer guide recommends `background=True` or an HTTP timeout of 15 to 20 minutes. It scores 87 percent on the ERQA benchmark. Articles claiming latency under 50 ms and "actuation
 tokens" did not match the official documentation.
 
 ### Three ways to use it
@@ -59,7 +71,8 @@ tokens" did not match the official documentation.
    layer. Argon never sends raw angles.
 2. **Argon helps SmolVLA offline.** Hindsight labelling and a progress curve for recorded
    episodes, to drop the bad demonstrations. Synthetic data is the most demanding variant
-   and comes last.
+   and comes last: Google reports building a MuJoCo twin from one photo, generating more
+   than 4500 episodes and lifting a VLA's real success from 56 to 75 percent.
 3. **Argon as the planner of the conversational robot.** A speech model handles the talking
    and calls Argon as a tool for tasks that need thought, such as "sort the bricks by
    colour".

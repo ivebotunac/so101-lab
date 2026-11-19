@@ -1,0 +1,8 @@
+# Copy to robot.local.yaml and fill in. robot.local.yaml is gitignored.
+# Only the keys written here override config/robot.yaml.
+
+follower:
+  port: /dev/tty.usbmodem0000000000   # from lerobot-find-port
+
+# leader:
+#   port: /dev/tty.usbmodem0000000000

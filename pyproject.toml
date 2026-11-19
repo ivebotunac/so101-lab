@@ -1,11 +1,13 @@
 [build-system]
-requires = ["setuptools>=68"]
+requires = ["setuptools>=77"]
 build-backend = "setuptools.build_meta"
 
 [project]
 name = "so101"
 version = "0.1.0"
-description = "A lab around one SO-101 robot arm"
+description = "A lab around one SO-101 robot arm: Python lessons for students and robot learning research"
+readme = "README.md"
+license = "MIT"
 requires-python = ">=3.10"
 
 [project.optional-dependencies]

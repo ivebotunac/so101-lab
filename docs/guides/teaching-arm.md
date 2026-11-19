@@ -32,11 +32,12 @@ training; those come with the [full setup](setup-macos.md).
 1. Plug in the 12 V supply, then the USB cable.
 2. Find the port: `lerobot-find-port`. It asks for the USB cable to be unplugged and names
    the port that disappeared. On macOS, `ls /dev/tty.usbmodem*` lists it directly.
-3. Write the port into `config/robot.yaml` under `follower.port`.
+3. Copy `config/robot.local.example.yaml` to `config/robot.local.yaml` and write the port
+   under `follower.port`. The file is gitignored, because the port differs per computer.
 4. Calibrate:
 
    ```bash
-   lerobot-calibrate --robot.type=so101_follower --robot.port=<FOLLOWER_PORT> --robot.id=ive_follower
+   lerobot-calibrate --robot.type=so101_follower --robot.port=<FOLLOWER_PORT> --robot.id=lab_follower
    ```
 
    The motors go limp, so hold the arm.
@@ -45,7 +46,7 @@ training; those come with the [full setup](setup-macos.md).
    - Move each joint slowly from one end of its travel to the other, the gripper included.
      `wrist_roll` is skipped, it turns a full circle. The table on screen shows MIN and MAX
      for each motor changing as the joint moves.
-   - Press Enter. The calibration is saved under the id `ive_follower`.
+   - Press Enter. The calibration is saved under the id `lab_follower`.
 
    When a calibration already exists the command first offers to keep it; `c` and Enter
    starts a new one. The video is at
@@ -100,6 +101,6 @@ functions refuse to move a motor above 65 °C.
 | `The arm is not calibrated` | No calibration file under the id in `config/robot.yaml` | Calibrate |
 | `The calibration file does not match the motors` | The motors hold another calibration | Calibrate, or keep the file when the command offers it |
 | `ValueError: ... can go from ... to ...` | The angle is outside what calibration recorded | Use a smaller angle, or calibrate with a wider sweep |
-| A program prints `[sim]` lines and the arm stands still | No port in `config/robot.yaml`, or `SO101_SIM=1` is set | Write the port, unset the variable |
+| A program prints `[sim]` lines and the arm stands still | No port in `config/robot.local.yaml`, or `SO101_SIM=1` is set | Write the port, unset the variable |
 | The port is not found | Cable, power, or a board that needs the CH340 driver | See the [full setup](setup-macos.md) |
 | The arm drops when a program starts | The motors were off and the arm was not resting | Start from the rest pose, or hold the arm |

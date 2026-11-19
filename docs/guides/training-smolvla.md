@@ -24,7 +24,7 @@ ACT, stacking 75 against 65, sorting 78 against 68. Transfer to an SO-101: 76.5 
 An independent benchmark on a physical SO-101 (https://arxiv.org/abs/2606.08881, four tasks,
 100 demonstrations each) is less kind: SmolVLA averaged 32.5 percent, level with ACT at
 33.75, while pi0.5 reached 56.25 and recovered from far more of its failures. See
-[the November 2026 research note](../../research/2026-11-11-state-of-the-stack.md). Expect
+[the November 2026 research note](../../research/stack-reviews/2026-11.md). Expect
 results on this arm to sit between the blog and the benchmark, and measure.
 
 ## It does not work without fine-tuning
@@ -97,7 +97,7 @@ https://huggingface.co/docs/lerobot/notebooks
 lerobot-rollout \
   --strategy.type=base \
   --policy.path=${HF_USER}/smolvla_so101 \
-  --robot.type=so101_follower --robot.port=<FOLLOWER_PORT> --robot.id=ive_follower \
+  --robot.type=so101_follower --robot.port=<FOLLOWER_PORT> --robot.id=lab_follower \
   --robot.cameras="{ scene: {...}, wrist: {...} }" \
   --rename_map='{"observation.images.scene": "observation.images.camera1", "observation.images.wrist": "observation.images.camera2"}' \
   --task="<the exact string used when recording>" \

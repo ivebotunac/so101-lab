@@ -7,12 +7,16 @@ reasoning models and voice commands.
 
 Everything here is in English and in Python. `README.md` maps the repo.
 
-## This repo will be public
+## This repo is public
 
-It is private now and will be opened later, history included. Nothing private goes into a
-commit: no home directory paths, no credentials, no personal accounts, no names of private
-repos or private notes. Ports and camera indexes are machine facts, not secrets, and live in
-`config/robot.yaml`. Keys live in a gitignored `.env`; `.env.example` lists them blank.
+Every commit is public, history included. Nothing private goes into one: no home directory
+paths, no credentials, no personal accounts, no names of private repos or private notes.
+What differs per computer, ports and camera indexes, lives in the gitignored
+`config/robot.local.yaml`, laid over `config/robot.yaml`; `robot.local.example.yaml` shows
+its shape. Keys live in a gitignored `.env`; `.env.example` lists them blank.
+
+The repo serves a first-year programming course as well as research. `teaching/` is read by
+students, so it stays within what the course has covered and is written for them.
 
 ## Hardware facts that cost money when forgotten
 
@@ -21,7 +25,7 @@ repos or private notes. Ports and camera indexes are machine facts, not secrets,
   the table and a hand is ready whenever torque is released.
 - **Calibration is an agreement about zero.** A dataset, a keyframe file and a trained policy
   are valid only for the calibration they were made on. The calibration ids are
-  `ive_follower` and `ive_leader` and are the same in every command.
+  `lab_follower` and `lab_leader` and are the same in every command.
 - **The gripper overheats first.** Motors go into protection near 71 °C. Long sessions read
   `Present_Temperature`.
 
@@ -56,10 +60,11 @@ changing or adding one, check the current documentation instead of writing it fr
 | One line per training or evaluation run | `docs/experiments.md` |
 | Code that survives | `src/so101/` |
 | Student lessons, fun programs and arm tools, no AI | `teaching/`, indexed by its `README.md` |
-| How the coding assistant writes and runs them | `.claude/skills/arm-teach/` |
+| How lessons are written and run | `.claude/skills/arm-teach/` |
 | A step of the learning ladder | `labs/<nn>-<name>/` with goal, command and done-when |
 | An open-ended trial with a result | `experiments/<date>-<name>/` |
-| A note on a new model, paper or release | `research/<date>-<name>.md` |
+| A note on a paper, video, thread, repository or release | `research/<topic>/<source>.md`, indexed in `research/README.md`; written with `.claude/skills/research-note/` |
+| A periodic check of what the guides rely on | `research/stack-reviews/<YYYY-MM>.md` |
 | A robot skill as data | `behaviors/<name>/` |
 
 A folder is created when its first file is. Datasets and checkpoints live on the Hugging

@@ -1,8 +1,10 @@
 # Setup on macOS
 
-From an unopened kit to a follower arm that mirrors the leader. Ports, ids and camera
-indexes are written into `config/robot.yaml` as they are found; the commands below show them
-as `<FOLLOWER_PORT>` and `<LEADER_PORT>`.
+From an unopened kit to a follower arm that mirrors the leader. Ports and camera indexes
+differ per computer and are written into `config/robot.local.yaml`, a gitignored copy of
+`config/robot.local.example.yaml`, as they are found. Calibration ids are the same
+everywhere and live in `config/robot.yaml`. The commands below show the ports as
+`<FOLLOWER_PORT>` and `<LEADER_PORT>`.
 
 ## Before anything is plugged in
 
@@ -61,8 +63,8 @@ one connected. On a Waveshare board both jumpers sit on channel `B` (USB).
 ## 4. Calibration
 
 ```bash
-lerobot-calibrate --robot.type=so101_follower --robot.port=<FOLLOWER_PORT> --robot.id=ive_follower
-lerobot-calibrate --teleop.type=so101_leader  --teleop.port=<LEADER_PORT>  --teleop.id=ive_leader
+lerobot-calibrate --robot.type=so101_follower --robot.port=<FOLLOWER_PORT> --robot.id=lab_follower
+lerobot-calibrate --teleop.type=so101_leader  --teleop.port=<LEADER_PORT>  --teleop.id=lab_leader
 ```
 
 - Move every joint to the middle of its range, press Enter, then sweep each joint through
@@ -77,8 +79,8 @@ lerobot-calibrate --teleop.type=so101_leader  --teleop.port=<LEADER_PORT>  --tel
 
 ```bash
 lerobot-teleoperate \
-  --robot.type=so101_follower --robot.port=<FOLLOWER_PORT> --robot.id=ive_follower \
-  --teleop.type=so101_leader  --teleop.port=<LEADER_PORT>  --teleop.id=ive_leader \
+  --robot.type=so101_follower --robot.port=<FOLLOWER_PORT> --robot.id=lab_follower \
+  --teleop.type=so101_leader  --teleop.port=<LEADER_PORT>  --teleop.id=lab_leader \
   --display_data=true
 ```
 

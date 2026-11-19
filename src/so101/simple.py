@@ -1,6 +1,6 @@
 """Student API for the SO-101 follower arm: plain functions, angles in degrees.
 
-Runs on the real arm when config/robot.yaml names a follower port, otherwise on a
+Runs on the real arm when config/robot.local.yaml names a follower port, otherwise on a
 simulated arm that prints each motion. SO101_SIM=1 forces the simulation.
 
 Zero degrees is the middle of a joint's calibrated range. The gripper goes from
@@ -16,6 +16,7 @@ from pathlib import Path
 JOINTS = ("shoulder_pan", "shoulder_lift", "elbow_flex", "wrist_flex", "wrist_roll", "gripper")
 
 CONFIG = Path(__file__).resolve().parents[2] / "config" / "robot.yaml"
+LOCAL_CONFIG = CONFIG.with_name("robot.local.yaml")  # this computer's port, gitignored
 MAX_SPEED = 90.0        # degrees per second
 MAX_TEMPERATURE = 65    # °C, the motor protects itself near 71
 LIMIT_MARGIN = 3.0      # degrees kept free before each end of a joint
@@ -54,9 +55,9 @@ class _SimulatedArm:
     def __init__(self):
         self.angles = {joint: 0.0 for joint in JOINTS}
         # With a calibration on this computer the dry run has the real arm's limits.
-        files = sorted(CALIBRATION.glob("*.json"))
-        if files:
-            calibration = json.loads(files[0].read_text())
+        file = CALIBRATION / f"{_config().get('id')}.json"
+        if file.is_file():
+            calibration = json.loads(file.read_text())
             self.limits = _limits({j: (c["range_min"], c["range_max"]) for j, c in calibration.items()})
 
     def read(self, joint):
@@ -110,11 +111,16 @@ class _RealArm:
 
 
 def _config():
+    """The follower section of robot.yaml, with robot.local.yaml laid over it."""
     try:
         import yaml
     except ImportError:
         return {}
-    return yaml.safe_load(CONFIG.read_text())["follower"]
+    follower = yaml.safe_load(CONFIG.read_text())["follower"]
+    if LOCAL_CONFIG.is_file():
+        local = yaml.safe_load(LOCAL_CONFIG.read_text()) or {}
+        follower.update(local.get("follower") or {})
+    return follower
 
 
 def _follower_config():
@@ -225,7 +231,7 @@ def home(speed=30):
 
 
 def rest(speed=25):
-    """Fold the arm into its rest pose from config/robot.yaml, then switch the motors off."""
+    """Fold the arm into its rest pose from the config, then switch the motors off."""
     arm = _get_arm()
     targets = {}
     for joint, angle in (_config().get("rest_pose") or {}).items():

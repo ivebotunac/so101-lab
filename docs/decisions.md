@@ -21,6 +21,9 @@ names the one it replaces.
 | 2026-11-11 | Robot skills live in `behaviors/`, not `skills/` | Keeps them apart from the coding assistant's skills |
 | 2026-11-19 | The student API is plain functions in `so101.simple`, follower only, limits taken from the calibration | First-year students know functions and not classes; one arm, one supply and one cable set up fast |
 | 2026-11-19 | The motors keep their torque when a student program ends | An arm that falls at the last line of every script wears out and frightens |
+| 2026-11-19 | The repo is public under MIT for code and CC BY 4.0 for written material | Students and other labs can reuse the lessons and the guides |
+| 2026-11-19 | Ports live in a gitignored `config/robot.local.yaml`; calibration ids are `lab_follower` and `lab_leader` | A clone on another computer falls back to the simulated arm instead of reaching for someone else's port |
+| 2026-11-19 | Research notes are sorted by topic and named after their source; stack reviews are monthly | A dated file at the top of `research/` said when, not what |
 
 ## Lessons that shaped them
 

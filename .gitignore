@@ -1,5 +1,7 @@
 *.egg-info/
 .env
+config/robot.local.yaml
+.claude/settings.local.json
 .venv/
 __pycache__/
 *.pyc

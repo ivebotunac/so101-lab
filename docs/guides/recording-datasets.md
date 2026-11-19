@@ -28,9 +28,9 @@ hf auth login
 HF_USER=$(NO_COLOR=1 hf auth whoami | awk -F': *' 'NR==1 {print $2}')
 
 lerobot-record \
-  --robot.type=so101_follower --robot.port=<FOLLOWER_PORT> --robot.id=ive_follower \
+  --robot.type=so101_follower --robot.port=<FOLLOWER_PORT> --robot.id=lab_follower \
   --robot.cameras="{ scene: {type: opencv, index_or_path: <SCENE_INDEX>, width: 640, height: 480, fps: 30}, wrist: {type: opencv, index_or_path: <WRIST_INDEX>, width: 640, height: 480, fps: 30} }" \
-  --teleop.type=so101_leader --teleop.port=<LEADER_PORT> --teleop.id=ive_leader \
+  --teleop.type=so101_leader --teleop.port=<LEADER_PORT> --teleop.id=lab_leader \
   --dataset.repo_id=${HF_USER}/so101-test \
   --dataset.num_episodes=5 \
   --dataset.single_task="Grab the black cube" \
@@ -63,7 +63,7 @@ missing streams. Do this for every episode before training.
 **Replay it.** This uses no model and tests the hardware and the calibration.
 
 ```bash
-lerobot-replay --robot.type=so101_follower --robot.port=<FOLLOWER_PORT> --robot.id=ive_follower \
+lerobot-replay --robot.type=so101_follower --robot.port=<FOLLOWER_PORT> --robot.id=lab_follower \
   --dataset.repo_id=${HF_USER}/so101-test --dataset.episode=0
 ```
 

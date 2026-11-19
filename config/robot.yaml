@@ -1,10 +1,12 @@
-# The one place for machine facts. Fill the nulls from lerobot-find-port and
-# lerobot-find-cameras; every guide and script reads these instead of repeating them.
+# Facts about the lab's arm that every guide and script reads instead of repeating them.
+# What differs per computer, the ports and the camera indexes, goes into robot.local.yaml
+# beside this file: copy robot.local.example.yaml, fill it from lerobot-find-port and
+# lerobot-find-cameras. That file is gitignored and laid over this one.
 
 follower:
   type: so101_follower
-  id: ive_follower        # calibration key, never change without recalibrating
-  port: /dev/tty.usbmodem5B790815441
+  id: lab_follower        # calibration key, never change without recalibrating
+  port: null
   voltage: 12
   rest_pose:              # degrees, read with torque off while the arm lay folded; rest() goes here
     shoulder_pan: 0
@@ -16,7 +18,7 @@ follower:
 
 leader:
   type: so101_leader
-  id: ive_leader
+  id: lab_leader
   port: null
   voltage: 5
 

@@ -19,6 +19,8 @@ names the one it replaces.
 | 2026-10-13 | Argon is the candidate for planning and zero-shot pick and place; training stays for contact and speed | Tasks describable by points need no training |
 | 2026-11-11 | The repo also holds student examples on a simple API with a simulated arm | The same arm is used in a first-year programming course |
 | 2026-11-11 | Robot skills live in `behaviors/`, not `skills/` | Keeps them apart from the coding assistant's skills |
+| 2026-11-19 | The student API is plain functions in `so101.simple`, follower only, limits taken from the calibration | First-year students know functions and not classes; one arm, one supply and one cable set up fast |
+| 2026-11-19 | The motors keep their torque when a student program ends | An arm that falls at the last line of every script wears out and frightens |
 
 ## Lessons that shaped them
 

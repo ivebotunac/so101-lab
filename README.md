@@ -32,6 +32,9 @@ and [LeRobot](https://github.com/huggingface/lerobot). It is used for three thin
    through primitives.
 6. [Voice control](docs/guides/voice-control.md): speech, skills, memory, perception.
 
+For the programming course only the follower arm is needed:
+[the arm in a programming course](docs/guides/teaching-arm.md).
+
 Background reading is in [docs/knowledge](docs/knowledge): concepts, hardware, motion and
 kinematics, resources, literature, and a [reading list](docs/knowledge/reading-list.md) of
 tutorials and projects by topic. The target system and the order of work are in

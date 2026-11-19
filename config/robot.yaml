@@ -4,8 +4,15 @@
 follower:
   type: so101_follower
   id: ive_follower        # calibration key, never change without recalibrating
-  port: null              # /dev/tty.usbmodem...
+  port: /dev/tty.usbmodem5B790815441
   voltage: 12
+  rest_pose:              # degrees, read with torque off while the arm lay folded; rest() goes here
+    shoulder_pan: 0
+    shoulder_lift: -74
+    elbow_flex: 95
+    wrist_flex: 75
+    wrist_roll: 0
+    gripper: 2
 
 leader:
   type: so101_leader

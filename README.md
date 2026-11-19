@@ -32,8 +32,9 @@ and [LeRobot](https://github.com/huggingface/lerobot). It is used for three thin
    through primitives.
 6. [Voice control](docs/guides/voice-control.md): speech, skills, memory, perception.
 
-For the programming course only the follower arm is needed:
-[the arm in a programming course](docs/guides/teaching-arm.md).
+For the programming course only the follower arm is needed. [teaching/](teaching/README.md)
+holds the lessons, the fun programs and the functions they use, and
+[setting up the arm for teaching](docs/guides/teaching-arm.md) gets the arm ready for them.
 
 Background reading is in [docs/knowledge](docs/knowledge): concepts, hardware, motion and
 kinematics, resources, literature, and a [reading list](docs/knowledge/reading-list.md) of
@@ -48,7 +49,7 @@ config/          ports, calibration ids, camera indexes
 docs/guides/     how to do something, with commands
 docs/knowledge/  why it works that way
 src/so101/       the library: motors, motion, kinematics, perception, safety, voice, agents
-teaching/        student examples, no AI
+teaching/        lessons by lecture, fun programs and arm tools for students, no AI
 labs/            the learning ladder, one folder per step
 experiments/     dated open-ended trials
 research/        dated notes on new models, papers and releases

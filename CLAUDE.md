@@ -55,7 +55,8 @@ changing or adding one, check the current documentation instead of writing it fr
 | A decision and its reason | `docs/decisions.md` |
 | One line per training or evaluation run | `docs/experiments.md` |
 | Code that survives | `src/so101/` |
-| Student examples, no AI | `teaching/` |
+| Student lessons, fun programs and arm tools, no AI | `teaching/`, indexed by its `README.md` |
+| How the coding assistant writes and runs them | `.claude/skills/arm-teach/` |
 | A step of the learning ladder | `labs/<nn>-<name>/` with goal, command and done-when |
 | An open-ended trial with a result | `experiments/<date>-<name>/` |
 | A note on a new model, paper or release | `research/<date>-<name>.md` |

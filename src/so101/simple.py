@@ -8,6 +8,7 @@ Zero degrees is the middle of a joint's calibrated range. The gripper goes from
 """
 
 import atexit
+import json
 import os
 import time
 from pathlib import Path
@@ -20,7 +21,22 @@ MAX_TEMPERATURE = 65    # °C, the motor protects itself near 71
 LIMIT_MARGIN = 3.0      # degrees kept free before each end of a joint
 STEP = 0.02             # seconds between two targets sent to the motors
 
+CALIBRATION = Path.home() / ".cache/huggingface/lerobot/calibration/robots/so_follower"
+
 _arm = None
+
+
+def _limits(ranges):
+    """Turn calibrated ranges, {joint: (range_min, range_max)}, into limits in degrees."""
+    limits = {}
+    for joint, (range_min, range_max) in ranges.items():
+        if joint == "gripper":
+            limits[joint] = (0.0, 100.0)
+            continue
+        half = (range_max - range_min) / 2 * 360 / 4095
+        half = round(min(half - LIMIT_MARGIN, 170.0), 1)
+        limits[joint] = (-half, half)
+    return limits
 
 
 class _SimulatedArm:
@@ -37,6 +53,11 @@ class _SimulatedArm:
 
     def __init__(self):
         self.angles = {joint: 0.0 for joint in JOINTS}
+        # With a calibration on this computer the dry run has the real arm's limits.
+        files = sorted(CALIBRATION.glob("*.json"))
+        if files:
+            calibration = json.loads(files[0].read_text())
+            self.limits = _limits({j: (c["range_min"], c["range_max"]) for j, c in calibration.items()})
 
     def read(self, joint):
         return self.angles[joint]
@@ -71,14 +92,9 @@ class _RealArm:
             raise RuntimeError(f"The calibration file does not match the motors. Run:\n  {calibrate}")
         atexit.register(self.robot.disconnect)
 
-        self.limits = {}
-        for joint, calibration in self.robot.calibration.items():
-            if joint == "gripper":
-                self.limits[joint] = (0.0, 100.0)
-                continue
-            half = (calibration.range_max - calibration.range_min) / 2 * 360 / 4095
-            half = round(min(half - LIMIT_MARGIN, 170.0), 1)
-            self.limits[joint] = (-half, half)
+        self.limits = _limits(
+            {joint: (c.range_min, c.range_max) for joint, c in self.robot.calibration.items()}
+        )
 
     def read(self, joint):
         return self.robot.bus.read("Present_Position", joint, num_retry=2)
@@ -93,14 +109,18 @@ class _RealArm:
         self.robot.bus.disable_torque()
 
 
-def _follower_config():
-    if os.environ.get("SO101_SIM") == "1":
-        return None
+def _config():
     try:
         import yaml
     except ImportError:
+        return {}
+    return yaml.safe_load(CONFIG.read_text())["follower"]
+
+
+def _follower_config():
+    if os.environ.get("SO101_SIM") == "1":
         return None
-    follower = yaml.safe_load(CONFIG.read_text())["follower"]
+    follower = _config()
     return follower if follower.get("port") else None
 
 
@@ -158,6 +178,11 @@ def move(joint, angle, speed=45):
     _run({joint: angle}, speed)
 
 
+def pose(speed=45, **angles):
+    """Move several joints at once: pose(shoulder_pan=20, elbow_flex=30)."""
+    _run(angles, speed)
+
+
 def read_angle(joint):
     """Return the current angle of a joint in degrees."""
     _check_joint(joint)
@@ -197,6 +222,21 @@ def home(speed=30):
     targets = {joint: 0.0 for joint in JOINTS}
     targets["gripper"] = 10.0
     _run(targets, speed)
+
+
+def rest(speed=25):
+    """Fold the arm into its rest pose from config/robot.yaml, then switch the motors off."""
+    arm = _get_arm()
+    targets = {}
+    for joint, angle in (_config().get("rest_pose") or {}).items():
+        low, high = arm.limits[joint]
+        targets[joint] = min(max(angle, low), high)
+    if targets:
+        _run(targets, speed)
+    if arm.simulated:
+        print("[sim] motors off")
+    else:
+        arm.release()
 
 
 def relax():
